@@ -1,6 +1,7 @@
 {
   "apiId": "petstoreV1",
   "baseUrl": "https://petstore.swagger.io/v2",
+   "handlerPackage": "@meta-mcp-handler/http",
   "authentication": null,
   "endpoints": [
     {
