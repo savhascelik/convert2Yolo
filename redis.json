@@ -1,74 +1,64 @@
 {
-  "apiId": "redisV1", // API için benzersiz ID
-  "handlerPackage": "@meta-mcp-handler/redis", // <--- Kullanılacak NPM plugin paketi
-  "baseUrl": null, // HTTP API değil, gerekli değil
-  "authentication": {
-    "type": "connectionString", // Kimlik doğrulama tipi (Handler bunu anlar)
-    "credentialSource": { // Anahtarın kaynağını belirtir
-      "type": "environmentVariable", // Ortam değişkeninden oku
-      "variableName": "REDIS_URL" // Ortam değişkeninin adı
-      // Veya Anahtar Zinciri için:
-      // "type": "osKeychain",
-      // "serviceName": "meta-mcp-server",
-      // "accountName": "redisV1_connectionUrl"
-    }
-  },
-  "endpoints": [ // Redis komutlarını "endpoint" gibi tanımlıyoruz
-    // --- String Operations ---
-    {
-      "mcpOperationId": "get", // Tool adı: redisV1__get
-      "description": "Get value by key from Redis.",
-      "parameters": [
-        // Artık 'in' alanı 'argument' olmak zorunda değil, plugin bunu anlar.
-        // Sadece LLM'e verilecek argümanları tanımlamak yeterli.
-        { "name": "key", "required": true, "description": "Redis key to retrieve", "type": "string" }
-      ]
+    "apiId": "redisV1",
+    "handlerPackage": "@meta-mcp-handler/redis",
+    "baseUrl": null,
+    "authentication": {
+      "type": "connectionString",
+      "credentialSource": {
+        "type": "environmentVariable",
+        "variableName": "REDIS_URL"
+      }
     },
-    {
-      "mcpOperationId": "set", // Tool adı: redisV1__set
-      "description": "Set a Redis key-value pair with optional expiration.",
-      "parameters": [
-        { "name": "key", "required": true, "description": "Redis key", "type": "string" },
-        { "name": "value", "required": true, "description": "Value to store", "type": "string" },
-        { "name": "expireSeconds", "required": false, "description": "Optional expiration time in seconds", "type": "integer" }
-      ]
-    },
-    {
-      "mcpOperationId": "delete", // Tool adı: redisV1__delete
-      "description": "Delete one or more keys from Redis.",
-      "parameters": [
-        {
-          "name": "keys",
-          "required": true,
-          "description": "Key (string) or array of keys to delete.",
-          // JSON Schema ile daha iyi tanımlanabilir: { "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]}
-          "type": "array", // Veya string, handler ikisini de kabul edebilir
-          "items": {"type": "string"}
-        }
-      ]
-    },
-    // ... (Diğer Redis komutları: incr, hgetall, lpush vb. için benzer tanımlar) ...
-    {
-      "mcpOperationId": "hgetall",
-      "description": "Get all fields and values from a Redis hash.",
-      "parameters": [
-        { "name": "key", "required": true, "description": "Redis hash key", "type": "string" }
-      ]
-    },
-    {
-      "mcpOperationId": "lpush",
-      "description": "Prepend value(s) to a Redis list.",
-      "parameters": [
-         { "name": "key", "required": true, "description": "Redis list key", "type": "string" },
-         {
-           "name": "values", // Tek bir değer veya dizi olabilir
-           "required": true,
-           "description": "Value or array of values to prepend.",
-           "type": "array", // Veya string, handler ikisini de kabul edebilir
-           "items": {"type": "string"}
-         }
-      ]
-    }
-    // ... Diğer komutlar ...
-  ]
-}
+    "endpoints": [
+      {
+        "mcpOperationId": "get",
+        "description": "Get value by key from Redis.",
+        "parameters": [
+          { "name": "key", "required": true, "description": "Redis key to retrieve", "type": "string" }
+        ]
+      },
+      {
+        "mcpOperationId": "set",
+        "description": "Set a Redis key-value pair with optional expiration.",
+        "parameters": [
+          { "name": "key", "required": true, "description": "Redis key", "type": "string" },
+          { "name": "value", "required": true, "description": "Value to store", "type": "string" },
+          { "name": "expireSeconds", "required": false, "description": "Optional expiration time in seconds", "type": "integer" }
+        ]
+      },
+      {
+        "mcpOperationId": "delete",
+        "description": "Delete one or more keys from Redis.",
+        "parameters": [
+          {
+            "name": "keys",
+            "required": true,
+            "description": "Key (string) or array of keys to delete.",
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        ]
+      },
+      {
+        "mcpOperationId": "hgetall",
+        "description": "Get all fields and values from a Redis hash.",
+        "parameters": [
+          { "name": "key", "required": true, "description": "Redis hash key", "type": "string" }
+        ]
+      },
+      {
+        "mcpOperationId": "lpush",
+        "description": "Prepend value(s) to a Redis list.",
+        "parameters": [
+           { "name": "key", "required": true, "description": "Redis list key", "type": "string" },
+           {
+             "name": "values",
+             "required": true,
+             "description": "Value or array of values to prepend.",
+             "type": "array",
+             "items": {"type": "string"}
+           }
+        ]
+      }
+    ]
+  }
