@@ -1,6 +1,7 @@
 {
     "apiId": "jsonplaceholderV1",
     "baseUrl": "https://jsonplaceholder.typicode.com",
+     "handlerPackage": "@meta-mcp-handler/http",
     "authentication": null,
     "endpoints": [
       {
